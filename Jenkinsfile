@@ -32,8 +32,7 @@ pipeline {
              def artifactPath = sh(script: 'echo target/*.jar', returnStdout: true).trim()
              def remotePath = '/home/ec2-user/your-app'
              
-             sh "ssh -i ${sshKeyPath} ${ec2User}@${ec2Host} 'mkdir -p ${remotePath}
-'
+             sh "ssh -i ${sshKeyPath} ${ec2User}@${ec2Host} 'mkdir -p ${remotePath}'"
              sh "scp -i ${sshKeyPath} ${artifactPath} ${ec2User}@${ec2Host}:${remotePath}"
 
              sh """
