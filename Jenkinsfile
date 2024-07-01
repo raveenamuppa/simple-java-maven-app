@@ -35,16 +35,16 @@ pipeline {
              sh "scp -i ${sshKeyPath} ${artifactPath} ${ec2User}@${ec2Host}:${remotePath}"
 
              sh """
-             ssh -i${sshKeyPath} ${ec2User}@{ec2Host} << EOF
+             ssh -i ${sshKeyPath} ${ec2User}@{ec2Host} << EOF
              cd ${remotePath}
              pkill -f your-artifact.jar || true
              nohup java -jar your-artifact.jar &
              EOF
              """
-           }
-       }
-   }
-
+            }
+        }
+    }
+ }
 
     post {
         always {
