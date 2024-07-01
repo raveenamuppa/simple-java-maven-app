@@ -36,10 +36,10 @@ pipeline {
              sh "scp -i ${sshKeyPath} ${artifactPath} ${ec2User}@${ec2Host}:${remotePath}"
 
              sh """
-             ssh -i ${sshKeyPath} ${ec2User}@{ec2Host} << EOF
+             ssh -i ${sshKeyPath} ${ec2User}@${ec2Host} << EOF
              cd ${remotePath}
-             pkill -f your-artifact.jar || true
-             nohup java -jar ${artifactPath} &
+             pkill -f my-app-1.0-SNAPSHOT.jar || true
+             nohup java -jar my-app-1.0-SNAPSHOT.jar &
              EOF
              """
             }
