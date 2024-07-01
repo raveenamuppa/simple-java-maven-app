@@ -22,7 +22,7 @@ pipeline {
                 archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
             }
         }
-    }
+
         stage('deploy') {
           steps {
            script {
