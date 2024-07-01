@@ -39,7 +39,7 @@ pipeline {
              ssh -i ${sshKeyPath} ${ec2User}@${ec2Host} << EOF
              cd ${remotePath}
              pkill -f my-app-1.0-SNAPSHOT.jar || true
-             nohup java -jar my-app-1.0-SNAPSHOT.jar &
+             java -jar -Dspring.profiles.active=prod my-app-1.0-SNAPSHOT.jar > app.log &
              EOF
              """
             }
