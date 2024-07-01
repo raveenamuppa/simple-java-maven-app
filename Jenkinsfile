@@ -29,16 +29,18 @@ pipeline {
              def ec2User = 'ec2-user'
              def ec2Host = '34.227.46.78'
              def sshKeyPath = '/Users/raveenamuppa/.ssh/app-deploy.pem'
-             def artifactPath = 'target/your-artifact.jar'
+             def artifactPath = sh(script: 'echo target/*.jar', returnStdout: true).trim()
              def remotePath = '/home/ec2-user/your-app'
-
+             
+             sh "ssh -i ${sshKeyPath} ${ec2User}@${ec2Host} 'mkdir -p ${remotePath}
+'
              sh "scp -i ${sshKeyPath} ${artifactPath} ${ec2User}@${ec2Host}:${remotePath}"
 
              sh """
              ssh -i ${sshKeyPath} ${ec2User}@{ec2Host} << EOF
              cd ${remotePath}
              pkill -f your-artifact.jar || true
-             nohup java -jar your-artifact.jar &
+             nohup java -jar ${artifactPath} &
              EOF
              """
             }
