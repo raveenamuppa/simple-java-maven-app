@@ -36,7 +36,7 @@ pipeline {
 
              sh """
              ssh -i${sshKeyPath} ${ec2User}@{ec2Host} << EOF
-             cd ${ramotePath}
+             cd ${remotePath}
              pkill -f your-artifact.jar || true
              nohup java -jar your-artifact.jar &
              EOF
