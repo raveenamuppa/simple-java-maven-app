@@ -36,7 +36,7 @@ pipeline {
              sh "scp -i ${sshKeyPath} ${artifactPath} ${ec2User}@${ec2Host}:${remotePath}"
 
              sh """
-             ssh -i ${sshKeyPath} ${ec2User}@${ec2Host} << 'EOF'
+             ssh -i ${sshKeyPath} ${ec2User}@${ec2Host} << EOF
              cd ${remotePath}
              pkill -f my-app-1.0-SNAPSHOT.jar || true
              nohup java -jar -Dspring.profiles.active=prod my-app-1.0-SNAPSHOT.jar > output.log 2>&1 &
