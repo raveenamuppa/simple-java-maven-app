@@ -29,17 +29,17 @@ pipeline {
              def ec2User = 'ec2-user'
              def ec2Host = '34.227.46.78'
              def sshKeyPath = '/Users/raveenamuppa/.ssh/app-deploy.pem'
-             def artifactPath = sh(script: 'echo target/*.jar', returnStdout: true).trim()
+             def artifactPath = sh(script: 'ls target/*.jar', returnStdout: true).trim()
              def remotePath = '/home/ec2-user/your-app'
              
              sh "ssh -i ${sshKeyPath} ${ec2User}@${ec2Host} 'mkdir -p ${remotePath}'"
              sh "scp -i ${sshKeyPath} ${artifactPath} ${ec2User}@${ec2Host}:${remotePath}"
 
              sh """
-             ssh -i ${sshKeyPath} ${ec2User}@${ec2Host} << EOF
+             ssh -i ${sshKeyPath} ${ec2User}@${ec2Host} << 'EOF'
              cd ${remotePath}
              pkill -f my-app-1.0-SNAPSHOT.jar || true
-             java -jar -Dspring.profiles.active=prod my-app-1.0-SNAPSHOT.jar > app.log &
+             nohup java -jar -Dspring.profiles.active=prod my-app-1.0-SNAPSHOT.jar > output.log 2>&1 &
              EOF
              """
             }
