@@ -40,8 +40,10 @@ pipeline {
              cd ${remotePath}
              pkill -f my-app-1.0-SNAPSHOT.jar || true
              nohup java -jar -Dspring.profiles.active=prod my-app-1.0-SNAPSHOT.jar > output.log 2>&1 &
+
              EOF
              """
+
             }
         }
     }
